@@ -8,7 +8,7 @@ var avatars = ['01', '02', '03', '04', '05', '06', '07', '08'];
 
 shuffle(titles);
 shuffle(avatars);
- console.log(avatars);
+
 
 var hotels = [];
 for (var i = 0; i < 8; i++) {
@@ -40,10 +40,9 @@ for (var i = 0; i < 8; i++) {
     })
 }
 
-var mapHotels = document.querySelector('.map');
-mapHotels.classList.remove('map--faded');
+
  
- console.log(hotels);
+
 
 function randomInteger(min, max) {
     var rand = min + Math.random() * (max + 1 - min);
@@ -67,7 +66,7 @@ function shuffle(array) {
 }
 
 
-
+var mapHotels = document.querySelector('.map');
 var similarListElement = mapHotels.querySelector('.map__pins');
 var similarHotelTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -93,7 +92,7 @@ var renderAdvertising = function(advertising) {
     advertisingElement.querySelector('.popup__features').textContent = advertising.offer.features.toString();
     advertisingElement.querySelector('.popup__description').textContent = advertising.offer.description;
 
-console.log(advertising);
+
 return advertisingElement;
 }
 
@@ -110,3 +109,11 @@ var afterElement = mapHotels.querySelector('.map__filters-container');
 var fragment = document.createDocumentFragment();
 fragment.appendChild(renderAdvertising(hotels[0]));
 mapHotels.insertBefore(fragment, afterElement);
+
+var allFieldsets = document.querySelectorAll('fieldset');
+console.log(allFieldsets);
+
+
+for (var i = 0; i < allFieldsets.length; i++) {
+   allFieldsets[i].setAttribute("disabled", "true");
+}
