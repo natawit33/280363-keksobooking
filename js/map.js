@@ -2,7 +2,7 @@
 var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var types = ['palace', 'flat', 'house', 'bungalo'];
 var checkin_out = ['12:00', '13:00', '14:00'];
-var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']; 
+var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg" расположенных в произвольном порядке'];
 var avatars = ['01', '02', '03', '04', '05', '06', '07', '08'];
 
@@ -22,11 +22,11 @@ for (var i = 0; i < 8; i++) {
             "title": titles[i],
             "address": locationX + ", " + locationY,
             "price": randomInteger(1000, 1000000),
-            "type": types[randomInteger(0, 3)] ,
+            "type": types[randomInteger(0, 3)],
             "rooms": randomInteger(1, 5),
             "guests": randomInteger(1, 8),
-            "checkin": checkin_out[randomInteger(0,2)],
-            "checkout": checkin_out[randomInteger(0,2)],
+            "checkin": checkin_out[randomInteger(0, 2)],
+            "checkout": checkin_out[randomInteger(0, 2)],
             "features": features.slice(randomInteger(0, 5)),
             "description": "Великолепная квартира-студия в центре Новочебоксарска.",
             "photos": photos.slice(randomInteger(0, 2)),
@@ -40,20 +40,16 @@ for (var i = 0; i < 8; i++) {
     })
 }
 
-
- 
-
-
 function randomInteger(min, max) {
     var rand = min + Math.random() * (max + 1 - min);
     rand = Math.floor(rand);
     return rand;
-  }
+}
 
 function shuffle(array) {
     var i = array.length,
-    j = 0,
-    temp;
+        j = 0,
+        temp;
 
     while (i--) {
         j = Math.floor(Math.random() * (i + 1));
@@ -64,7 +60,6 @@ function shuffle(array) {
     }
     return array;
 }
-
 
 var mapHotels = document.querySelector('.map');
 var similarListElement = mapHotels.querySelector('.map__pins');
@@ -79,27 +74,23 @@ var renderHotels = function(hotel) {
     hotelElement.querySelector('img').src = hotel.author.avatar;
     hotelElement.querySelector('img').alt = hotel.offer.title;
     return hotelElement;
-
 }
 
 var renderAdvertising = function(advertising) {
     var advertisingElement = hotelAdvertisingTemplate.cloneNode(true);
     advertisingElement.querySelector('.popup__title').textContent = advertising.offer.title;
     advertisingElement.querySelector('.popup__text--address').textContent = advertising.offer.address;
-    advertisingElement.querySelector('.popup__text--price').textContent = advertising.offer.price+ "₽/ночь";
-    advertisingElement.querySelector('.popup__text--capacity').textContent = advertising.offer.rooms+" комнаты для "+ advertising.guests+" гостей";
-    advertisingElement.querySelector('.popup__text--time').textContent = "Заезд после " +advertising.offer.checkin+ " выезд до "+ advertising.offer.checkout;
+    advertisingElement.querySelector('.popup__text--price').textContent = advertising.offer.price + "₽/ночь";
+    advertisingElement.querySelector('.popup__text--capacity').textContent = advertising.offer.rooms + " комнаты для " + advertising.guests + " гостей";
+    advertisingElement.querySelector('.popup__text--time').textContent = "Заезд после " + advertising.offer.checkin + " выезд до " + advertising.offer.checkout;
     advertisingElement.querySelector('.popup__features').textContent = advertising.offer.features.toString();
     advertisingElement.querySelector('.popup__description').textContent = advertising.offer.description;
-
-
-return advertisingElement;
+    return advertisingElement;
 }
 
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < hotels.length; i++) {
     fragment.appendChild(renderHotels(hotels[i]));
-    
 }
 
 similarListElement.appendChild(fragment);
@@ -113,7 +104,20 @@ mapHotels.insertBefore(fragment, afterElement);
 var allFieldsets = document.querySelectorAll('fieldset');
 console.log(allFieldsets);
 
-
 for (var i = 0; i < allFieldsets.length; i++) {
-   allFieldsets[i].setAttribute("disabled", "true");
+    allFieldsets[i].setAttribute("disabled", "true");
+}
+
+
+var mapPinMain = mapHotels.querySelector('.map__pin--main');
+
+mapPinMain.addEventListener('mouseup', function() {
+  activeState();
+});
+
+var activeState = function() {
+    mapHotels.classList.remove('map--faded');//поставила точку перед классом map--faded
+    for (var i = 0; i < allFieldsets.length; i++) {
+        allFieldsets[i].removeAttribute('disabled');
+    }
 }
